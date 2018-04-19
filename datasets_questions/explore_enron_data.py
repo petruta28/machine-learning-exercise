@@ -37,5 +37,31 @@ enron_data = pickle.load(open("../final_project/final_project_dataset.pkl", "r")
 # print ("Nr of emails from Wesley Colwell to POIs: ", enron_data["COLWELL WESLEY"]["from_this_person_to_poi"])
 
 print enron_data["SKILLING JEFFREY K"]["exercised_stock_options"]
+print enron_data["SKILLING JEFFREY K"]
+salary_nan = 0
+emails_nan = 0
+total_payments = 0
+total_payments_poi = 0
+total_poi = 0
+for name, features in enron_data.iteritems():
+    print name, features
+    if features['salary'] == 'NaN':
+        salary_nan += 1
+    if features['email_address'] == 'NaN':
+        emails_nan += 1
+    if features['total_payments'] == 'NaN':
+        total_payments += 1
+    if bool(features['total_payments'] == 'NaN') and bool(features['poi']):
+        total_payments_poi += 1
+    if features['poi']:
+        total_poi += 1
 
-
+print('Salaries not nan: ', len(enron_data) - salary_nan)
+print('Emails not nan:', len(enron_data) - emails_nan)
+print('Total payments nan: ', total_payments)
+print ('Percentage: ', (100*total_payments)/len(enron_data))
+print('Number of POIs that have total_payments = NaN and percentage of these among total POIs: ', total_payments_poi, (total_payments_poi*100)/total_poi)
+print('Number of total people in the datatset is: ', len(enron_data) + 10)
+print('Number of folks with NaN for total payments: ', total_payments + 10)
+print("Total number of pois: ", total_poi + 10)
+print("Total number of Pois with NaN total_payments: ", total_payments_poi + 10)
