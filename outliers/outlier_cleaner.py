@@ -14,7 +14,12 @@ def outlierCleaner(predictions, ages, net_worths):
     cleaned_data = []
 
     ### your code goes here
-
-    
+    for prediction, age, net_worth in zip(predictions, ages, net_worths):
+        error = prediction - net_worth
+        tu = (age, net_worth, error)
+        if abs(error) < 80:
+            cleaned_data.append(tu)
+            # print (tu)
+    print(len(cleaned_data))
     return cleaned_data
 
